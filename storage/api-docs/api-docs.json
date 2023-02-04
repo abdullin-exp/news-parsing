@@ -1,0 +1,132 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Документация",
+        "description": "Документация",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/rbc/news": {
+            "get": {
+                "tags": [
+                    "Новости"
+                ],
+                "description": "Новости из RSS страницы rbc.ru",
+                "operationId": "/api/rbc/news",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Сортировка по дате публикации новости",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Список возвращаемых полей новости",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Выведет список новостей из RSS страницы ресурса rbc.ru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "description": "Статус (success, error)",
+                                            "type": "string",
+                                            "default": "success"
+                                        },
+                                        "list": {
+                                            "description": "Список новостей",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/NewsItem"
+                                            }
+                                        },
+                                        "message": {
+                                            "description": "Текст сообщения об ошибке",
+                                            "type": "string",
+                                            "default": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RBCController": {
+                "title": "RBCController",
+                "description": "RBCController",
+                "xml": {
+                    "name": "RBCController"
+                }
+            },
+            "NewsItem": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор новости",
+                        "type": "integer",
+                        "example": 1,
+                        "nullable": false
+                    },
+                    "name": {
+                        "description": "Заголовок новости",
+                        "type": "string",
+                        "example": "Новость 1",
+                        "nullable": false
+                    },
+                    "short_description": {
+                        "description": "Краткое описание новости",
+                        "type": "string",
+                        "example": "Краткое описание",
+                        "nullable": false
+                    },
+                    "public_date": {
+                        "description": "Дата публикации новости",
+                        "type": "string",
+                        "example": "2023-02-04 08:45:51",
+                        "nullable": false
+                    },
+                    "author": {
+                        "description": "Автор новости",
+                        "type": "string",
+                        "example": "Иван Иваныч",
+                        "nullable": true
+                    },
+                    "image": {
+                        "description": "Картинка новости",
+                        "type": "string",
+                        "example": "/storage/images/rbc/756460582323479.jpg",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
